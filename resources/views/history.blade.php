@@ -16,6 +16,12 @@
             </ul>
     
             <a href="{{ route('dashboard') }}" class="text-blue-500 mt-4 block text-center">Kembali ke To-Do List</a>
+
+            <div class="flex justify-between border border-gray-300 w-full rounded-full">
+                <input type="text" name="title" class="border-none bg-transparent" placeholder="Add your title" required>
+                <input type="date" name="date" class="border-none bg-transparent"required>
+                <button type="submit" class="bg-red-500 text-white p-3 w-20 rounded-full">Add</button>
+            </div>
         </div>
     </div>
 </div>

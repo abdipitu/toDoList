@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Task extends Model
+class Title extends Model
 {
     use HasFactory;
     protected $guarded = [];
 
-    public function title(): BelongsTo
+    public function tasks(): HasMany
     {
-        return $this->belongsTo(Title::class);
+        return $this->hasMany(Task::class);
     }
 }

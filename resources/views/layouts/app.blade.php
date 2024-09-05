@@ -13,9 +13,18 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        <!-- Styles -->
+        <style>
+            input[type="date"]::-webkit-datetime-edit-year-field:not([aria-valuenow]),
+            input[type="date"]::-webkit-datetime-edit-month-field:not([aria-valuenow]),
+            input[type="date"]::-webkit-datetime-edit-day-field:not([aria-valuenow]) {
+                color: transparent;
+            }
+        </style>
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen bg-zinc-200">
             @include('layouts.navigation')
 
             <!-- Page Heading -->

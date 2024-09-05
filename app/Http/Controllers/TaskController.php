@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Archive;
+use Carbon\Carbon;
 use App\Models\Task;
+use App\Models\Title;
+use App\Models\Archive;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -11,16 +13,47 @@ class TaskController extends Controller
     public function index()
     {
         $tasks = Task::all();
-        return view('dashboard', compact('tasks'));
+        $titles = Title::all();
+        return view('dashboard', compact('tasks', 'titles'));
+    }
+
+    public function getTasks()
+    {
+        $tasks = Task::with('title')->get();
+        return response()->json($tasks);
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'title' => 'required|string|max:255',
+            'title_id' => 'required',
         ]);
 
-        Task::create($request->only('title'));
+        Task::create([
+            'name' => $request->title,
+            'title_id' => $request->title_id,
+            'is_completed' => false
+        ]);
+        
+        return redirect()->route('dashboard');
+    }
+    
+    public function storeTitle(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'due_date' => 'required|date'
+        ]);
+
+        $dueDate = Carbon::parse($request->input('due_date'));
+        $day = $dueDate->locale('id')->translatedFormat('l');
+        
+        Title::create([
+            'title' => $request->title,
+            'due_date' => $request->input('due_date') ?? now(),
+            'day' => $day,
+        ]);
 
         return redirect()->route('dashboard');
     }
@@ -42,6 +75,13 @@ class TaskController extends Controller
 
         $task->delete();
 
+        return redirect()->route('dashboard');
+    }
+
+    public function destroye($id)
+    {
+        $title = Title::find($id);
+        $title->delete();
         return redirect()->route('dashboard');
     }
 }

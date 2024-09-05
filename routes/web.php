@@ -21,9 +21,13 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/dashboard', [TaskController::class, 'index'])->name('dashboard')->middleware(['auth', 'verified']);
 Route::post('/tasks', [TaskController::class, 'store'])->name('tasks.store');
+Route::post('/title', [TaskController::class, 'storeTitle'])->name('tasks.title');
 Route::patch('/tasks/{task}', [TaskController::class, 'update'])->name('tasks.update');
 Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
 
+
+
 Route::get('/history', [HistoryController::class, 'index'])->name('history');
+Route::get('/destroy/{id}', [TaskController::class, 'destroye'])->name('destroy');
 
 require __DIR__.'/auth.php';
