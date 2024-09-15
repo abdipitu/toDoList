@@ -23,24 +23,29 @@
             }
         </style>
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-zinc-800">
-            @include('layouts.navigation')
-
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
+    <body class="font-sans">
+        <div class="h-screen bg-zinc-800">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <!-- Page Sidebar -->
+                <div class="w-1/5">
+                    <div class="fixed">
+                        <div class="pr-7">
+                            <a href="/today">Today 📍</a>
+                            <a href="/home" class="flex justify-between">
+                                <p class="font-semibold">My project</p>
+                                <x-arrow />
+                            </a>
+                        </div>
                     </div>
-                </header>
-            @endisset
+                </div>
+                
+    
+                <!-- Page Content -->
+                <div class="overflow-hidden sm:rounded-lg w-4/5">
+                    {{ $slot }}
+                </div>
+            </div>
 
-            <!-- Page Content -->
-            <main>
-                {{-- <x-drawer></x-drawer> --}}
-                {{ $slot }}
-            </main>
         </div>
     </body>
 </html>

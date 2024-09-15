@@ -14,7 +14,8 @@ class TaskController extends Controller
     {
         $tasks = Task::all();
         $titles = Title::all();
-        return view('dashboard', compact('tasks', 'titles'));
+        $today = Carbon::today()->format('Y-m-d');
+        return view('dashboard', compact('tasks', 'titles', 'today'));
     }
 
     public function getTasks()
@@ -36,7 +37,7 @@ class TaskController extends Controller
             'is_completed' => false
         ]);
         
-        return redirect()->route('dashboard');
+        return redirect()->route('dashboard')->with('success', 'Task created successfully');
     }
     
     public function storeTitle(Request $request)
@@ -83,5 +84,14 @@ class TaskController extends Controller
         $title = Title::find($id);
         $title->delete();
         return redirect()->route('dashboard');
+    }
+
+    public function home()
+    {
+        $tasks = Task::all();
+        $titles = Title::all();
+        $today = Carbon::today()->format('Y-m-d');
+        $count = $tasks->count();
+        return view('home', compact('tasks', 'titles', 'today', 'count'));
     }
 }
