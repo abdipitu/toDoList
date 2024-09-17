@@ -37,7 +37,7 @@ class TaskController extends Controller
             'is_completed' => false
         ]);
         
-        return redirect()->route('dashboard')->with('success', 'Task created successfully');
+        return redirect()->back()->with('success', 'Task created successfully');
     }
     
     public function storeTitle(Request $request)
@@ -56,14 +56,14 @@ class TaskController extends Controller
             'day' => $day,
         ]);
 
-        return redirect()->route('dashboard');
+        return redirect()->back();
     }
 
     public function update(Request $request, Task $task)
     {
         $task->update(['is_completed' => $request->has('is_completed')]);
 
-        return redirect()->route('dashboard');
+        return redirect()->back();
     }
 
     public function destroy(Task $task)
@@ -76,7 +76,7 @@ class TaskController extends Controller
 
         $task->delete();
 
-        return redirect()->route('dashboard');
+        return redirect()->back();
     }
 
     public function destroye($id)
@@ -91,7 +91,16 @@ class TaskController extends Controller
         $tasks = Task::all();
         $titles = Title::all();
         $today = Carbon::today()->format('Y-m-d');
-        $count = $tasks->count();
+        $count = $titles->count();
         return view('home', compact('tasks', 'titles', 'today', 'count'));
+    }
+
+    public function project()
+    {
+        $tasks = Task::all();
+        $titles = Title::all();
+        $today = Carbon::today()->format('Y-m-d');
+        $count = $titles->count();
+        return view('project', compact('tasks', 'titles', 'today', 'count'));
     }
 }
