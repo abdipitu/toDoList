@@ -17,7 +17,7 @@ class TodoFactory extends Factory
     public function definition(): array
     {
         return [
-            'todo' => fake()->sentence(),
+            'title' => fake()->sentence(),
         ];
     }
 }

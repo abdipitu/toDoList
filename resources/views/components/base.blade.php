@@ -11,7 +11,7 @@
     <div class="w-full font-outfit">
         <x-sidebar></x-sidebar>
         
-        <div class="w-4/5 px-96 py-24 min-h-screen">{{ $slot }}</div>
+        <div class="w-4/5 px-96 py-24 min-h-screen w-full">{{ $slot }}</div>
     </div>
 </body>
 </html>

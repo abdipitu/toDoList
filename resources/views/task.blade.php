@@ -1,6 +1,6 @@
 <x-base>
     <h1 class="text-2xl font-bold text-white mb-2">Tugas</h1>
-    <form action="{{ route('todos.store') }}" method="POST" class="flex justify-between border border-gray-300 w-full rounded-lg">
+    <form action="{{ route('todos.store') }}" method="POST" class="flex justify-between border border-gray-300 w-1/2 rounded-lg">
         @csrf
         <input type="text" name="todo" class="border-none bg-transparent w-50" placeholder="Buat tugas baru" required>
         <button type="submit" class="bg-red-500 text-white p-3 w-20 rounded-lg">Add</button>

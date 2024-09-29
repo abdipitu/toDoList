@@ -8,6 +8,7 @@ class InboxController extends Controller
 {
     public function index()
     {
-        return view('inbox');
+        $messages = \App\Models\Message::all();
+        return view('inbox', compact('messages'));
     }
 }

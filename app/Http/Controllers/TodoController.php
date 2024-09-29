@@ -13,7 +13,7 @@ class TodoController extends Controller
 {
     public function index()
     {
-        $todo = Todo::all();
+        $todo = Todo::where('user_id', auth()->id())->get();
         // $today = Carbon::today()->format('Y-m-d');
         return view('task', compact('todo'));
     }
@@ -23,6 +23,7 @@ class TodoController extends Controller
         Todo::create([
           'todo' => $request->todo,
           'is_completed' => false,
+          'user_id' => $request->auth()->id(),
         ]);
 
         return redirect()->route('tugas');

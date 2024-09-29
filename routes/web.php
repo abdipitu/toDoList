@@ -21,27 +21,30 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/dashboard', [TaskController::class, 'index'])->name('dashboard')->middleware(['auth', 'verified']);
-Route::get('/home', [TaskController::class, 'home'])->name('home');
-Route::get('/project', [TaskController::class, 'project'])->name('project');
+// Route::get('/home', [TaskController::class, 'index'])->name('dashboard')->middleware(['auth', 'verified']);
+Route::get('/dashboard', [TaskController::class, 'home'])->name('dashboard')->middleware(['auth', 'verified']);
+Route::get('/project', [TaskController::class, 'project'])->name('project')->middleware(['auth', 'verified']);
 Route::post('/tasks', [TaskController::class, 'store'])->name('tasks.store');
-Route::post('/title', [TaskController::class, 'storeTitle'])->name('tasks.title');
+Route::post('/title', [TaskController::class, 'storeTitle'])->name('tasks.title')->middleware('auth');
 Route::patch('/tasks/{task}', [TaskController::class, 'update'])->name('tasks.update');
 Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
 
 
 
-Route::get('/history', [HistoryController::class, 'index'])->name('history');
+Route::get('/history', [HistoryController::class, 'index'])->name('history')->middleware(['auth', 'verified']);
 Route::get('/destroy/{id}', [TaskController::class, 'destroye'])->name('destroy');
 
 
 
 Route::get('/task', [TodoController::class, 'index'])->name('tugas');
 Route::get('/project/{id}', [TodoController::class, 'detailproject'])->name('detailproject');
-Route::post('/todos', [TodoController::class, 'store'])->name('todos.store');
+Route::post('/todos', [TodoController::class, 'store'])->name('todos.store')->middleware('auth');
 Route::patch('/todos/{todo}', [TodoController::class, 'update'])->name('todos.update');
 Route::delete('/todos/{todo}', [TodoController::class, 'destroy'])->name('todos.destroy');
 
 Route::get('/inbox', [InboxController::class, 'index'])->name('inbox');
+
+Route::delete('/title/{title}', [\App\Http\Controllers\TitleController::class, 'index'])->name('title.destroy');
+Route::get('/message', [\App\Http\Controllers\MessageController::class, 'index'])->name('message');
 
 require __DIR__.'/auth.php';

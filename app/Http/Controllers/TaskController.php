@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Task;
+use App\Models\Todo;
 use App\Models\Title;
 use App\Models\Archive;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Illuminate\Foundation\Auth\User;
 
 class TaskController extends Controller
 {
@@ -52,6 +55,7 @@ class TaskController extends Controller
         
         Title::create([
             'title' => $request->title,
+            'user_id' => $request->auth()->id(),
             'due_date' => $request->input('due_date') ?? now(),
             'day' => $day,
         ]);
@@ -89,16 +93,16 @@ class TaskController extends Controller
     public function home()
     {
         $tasks = Task::all();
-        $titles = Title::all();
+        $data = \App\Models\Todo::take(3)->get();
+        $dataProyek = \App\Models\Title::take(5)->get();
         $today = Carbon::today()->format('Y-m-d');
-        $count = $titles->count();
-        return view('home', compact('tasks', 'titles', 'today', 'count'));
+        return view('home', compact('tasks', 'data', 'today', 'dataProyek'));
     }
 
     public function project()
     {
         $tasks = Task::all();
-        $titles = Title::all();
+        $titles = Title::where('user_id', auth()->id())->get();
         $today = Carbon::today()->format('Y-m-d');
         $count = $titles->count();
         return view('project', compact('tasks', 'titles', 'today', 'count'));

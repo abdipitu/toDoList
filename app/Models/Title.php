@@ -16,4 +16,9 @@ class Title extends Model
     {
         return $this->hasMany(Task::class);
     }
+
+    public function users(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }
